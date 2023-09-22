@@ -12,12 +12,9 @@ self-contained: true
 
 Load packages and data:
 
-```{r load-pkg-data}
-#| message: false
-# install the package 'Lahman'
-install.packages('Lahman')
-# load the package
-library(Lahman)
+```{r load-pkg-data} 
+#| message: false 
+  library(Lahman)
 ```
 
 ## Exercises
@@ -57,12 +54,12 @@ mets_ben
 ### Exercise 4
 
 ```{r}
-mets_ben <- mets_ben %>%
-  dplyr::mutate(WPct = 1 / (1 + (RA / RS) * 2)) # calculate winning percentage #
+mets_ben <- mets_ben |>
+  dplyr::mutate(WPct = 1 / (1 + (RA / RS) * 2)) # To calculate win percentage #
 mets_ben
 
 mets_ben <- mets_ben |>
-  dplyr::mutate(W_hat = WPct*G) # Add a new col. W_hat by multiplying winning percentage with number of games #
+  dplyr::mutate(W_hat = WPct*G) # Adding a new col. W_hat by multiplying win percentage and number of games #
 mets_ben
 ```
 
@@ -71,11 +68,11 @@ mets_ben
 ```{r}
 library(dplyr)
 
-mets_ben <- mets_ben %>%
-  mutate(Performance = ifelse(W > W_hat, "Better", "Worse")) # Code to assess team performance and categorise it as "Better" or "worse" based on wins #
+mets_ben <- mets_ben |>
+  mutate(Performance = ifelse(W > W_hat, "Better", "Worse")) # Assess team performance and categorise it as "Better" or "worse" based on wins #
 
-summary_stats <- mets_ben %>%
-  group_by(Performance) %>%
+summary_stats <- mets_ben |>
+  group_by(Performance) |>
   summarize(count = n())
 
 summary_stats # Generate summary statistics for categorized performance #
@@ -94,11 +91,11 @@ best_seasons
 
 ```{r}
 library(dplyr)
-mets_ben <- mets_ben %>%
-  mutate(Diff = W - W_hat) %>% # Calculate the difference between Actual and Expected wins #
+mets_ben <- mets_ben |>
+  mutate(Diff = W - W_hat) |> # Calculate the difference between Actual and Expected wins #
   arrange(desc(Diff)) # sort the mets_ben difference in descending order #
 
-View(mets_ben)
+#View(mets_ben)
 ```
 
 ### Exercise 8
@@ -124,7 +121,7 @@ mets_ben |>
 
 ```{r}
 library(dplyr)
-mets_ben <- mets_ben %>% 
+mets_ben <- mets_ben |> 
   dplyr::mutate(
     gm = ifelse(
       yearID <= 2004, "Jim Duquette",
@@ -145,8 +142,8 @@ mets_ben
 ```{r}
 library(dplyr)
 
-manager_summary_stats <- mets_ben %>%   
-group_by(gm) %>%   
+manager_summary_stats <- mets_ben |>  
+group_by(gm) |>   
 summarize(num_years = n(),total_W = sum(W), total_L = sum(L),     total_WPct = mean(WPct),sum_resid = mean(Diff) ) # Generate summary statistics for General Manager's performance in 'manager_summary_stats" using number of years, total wins, total losses etc. #
 
 manager_summary_stats
